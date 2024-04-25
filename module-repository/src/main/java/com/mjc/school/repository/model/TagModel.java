@@ -1,8 +1,8 @@
 package com.mjc.school.repository.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 

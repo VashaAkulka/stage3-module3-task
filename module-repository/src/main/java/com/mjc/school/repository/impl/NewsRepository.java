@@ -2,15 +2,15 @@ package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.NewsModel;
-import com.mjc.school.repository.model.TagModel;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +40,7 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
     }
 
     @Override
+    @Transactional
     public NewsModel create(NewsModel entity) {
         if (entity != null) {
             entity.setCreateDate(LocalDateTime.now());
@@ -50,6 +51,7 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
     }
 
     @Override
+    @Transactional
     public Optional<NewsModel> update(NewsModel entity, Long id) {
         int updatedEntities = entityManager.createQuery("update NewsModel set title = :title, content = :content, author = :author, lastUpdateDate = :lastUpdateDate, tags = :tags where id = :id")
                 .setParameter("title", entity.getTitle())
@@ -68,6 +70,7 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Long id) {
         NewsModel tag = entityManager.find(NewsModel.class, id);
         if (tag != null) {

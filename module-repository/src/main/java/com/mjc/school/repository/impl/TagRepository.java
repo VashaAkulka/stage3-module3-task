@@ -2,16 +2,17 @@ package com.mjc.school.repository.impl;
 
 
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.model.AuthorModel;
+
 import com.mjc.school.repository.model.TagModel;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,7 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
     }
 
     @Override
+    @Transactional
     public TagModel create(TagModel entity) {
         if (entity != null) {
             entityManager.persist(entity);
@@ -48,12 +50,12 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
     }
 
     @Override
+    @Transactional
     public Optional<TagModel> update(TagModel entity, Long id) {
         int updatedEntities = entityManager.createQuery("update TagModel set name = :name where id = :id")
                 .setParameter("name", entity.getName())
                 .setParameter("id", id)
                 .executeUpdate();
-
         if (updatedEntities > 0) {
             return Optional.of(entity);
         } else {
@@ -62,6 +64,7 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Long id) {
         TagModel tag = entityManager.find(TagModel.class, id);
         if (tag != null) {

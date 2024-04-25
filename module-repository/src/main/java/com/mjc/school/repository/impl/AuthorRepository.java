@@ -2,17 +2,15 @@ package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.AuthorModel;
-import com.mjc.school.repository.model.NewsModel;
-import com.mjc.school.repository.model.TagModel;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +38,7 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
     }
 
     @Override
+    @Transactional
     public AuthorModel create(AuthorModel entity) {
         if (entity != null) {
             entity.setCreateDate(LocalDateTime.now());
@@ -50,6 +49,7 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
     }
 
     @Override
+    @Transactional
     public Optional<AuthorModel> update(AuthorModel entity, Long id) {
         int updatedEntities = entityManager.createQuery("update AuthorModel set name = :name, lastUpdateDate = :lastUpdateDate where id = :id")
                 .setParameter("name", entity.getName())
@@ -65,6 +65,7 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Long id) {
         AuthorModel tag = entityManager.find(AuthorModel.class, id);
         if (tag != null) {
