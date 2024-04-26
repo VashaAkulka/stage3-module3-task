@@ -1,6 +1,7 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.impl.AuthorRepository;
 import com.mjc.school.repository.model.AuthorModel;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDTO;
@@ -18,7 +19,7 @@ import java.util.List;
 public class AuthorService implements BaseService<AuthorDTO, Long> {
 
     private BaseValidation<AuthorDTO> validation;
-    private BaseRepository<AuthorModel, Long> repository;
+    private AuthorRepository repository;
 
     @Override
     public List<AuthorDTO> readAll() {
@@ -32,16 +33,31 @@ public class AuthorService implements BaseService<AuthorDTO, Long> {
 
     @Override
     public AuthorDTO create(AuthorDTO createRequest) throws ValidationException {
-        return null;
+        validation.validate(createRequest);
+
+        AuthorModel authorModel = new AuthorModel();
+        authorModel.setName(createRequest.getName());
+
+        return AuthorMapper.INSTANCE.authorToAuthorDto(repository.create(authorModel));
     }
 
     @Override
     public AuthorDTO update(AuthorDTO updateRequest, Long id) throws ValidationException {
-        return null;
+        validation.validate(updateRequest);
+
+        AuthorModel authorModel = new AuthorModel();
+        authorModel.setName(updateRequest.getName());
+
+        return AuthorMapper.INSTANCE.authorToAuthorDto(repository.update(authorModel, id).orElseThrow(() -> new ValidationException(ErrorCode.NO_SUCH_AUTHOR.getErrorData())));
     }
 
     @Override
     public boolean deleteById(Long id) throws ValidationException {
-        return false;
+        if (repository.deleteById(id)) return true;
+        else throw new ValidationException(ErrorCode.NO_SUCH_AUTHOR.getErrorData());
+    }
+
+    public AuthorDTO getAuthorByNewsId(Long newsId) {
+        return AuthorMapper.INSTANCE.authorToAuthorDto(repository.getAuthorByNewsId(newsId));
     }
 }

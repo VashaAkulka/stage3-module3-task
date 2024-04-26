@@ -84,10 +84,9 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
         return count > 0;
     }
 
-    public Set<TagModel> getTagsByNewsId(Long newsId) {
-        List<TagModel> tagList = entityManager.createQuery("select t from TagModel t join t.news n where n.id = :id", TagModel.class)
+    public List<TagModel> getTagsByNewsId(Long newsId) {
+        return entityManager.createQuery("select t from TagModel t join t.news n where n.id = :id", TagModel.class)
                 .setParameter("id", newsId)
                 .getResultList();
-        return new HashSet<>(tagList);
     }
 }

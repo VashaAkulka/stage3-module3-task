@@ -12,10 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 @AllArgsConstructor
@@ -72,9 +69,9 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
     @Override
     @Transactional
     public boolean deleteById(Long id) {
-        NewsModel tag = entityManager.find(NewsModel.class, id);
-        if (tag != null) {
-            entityManager.remove(tag);
+        NewsModel news = entityManager.find(NewsModel.class, id);
+        if (news != null) {
+            entityManager.remove(news);
             return true;
         }
         return false;
@@ -90,38 +87,33 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
         return count > 0;
     }
 
-    public Set<NewsModel> getNewsByTagNames(String name) {
-        List<NewsModel> tagList = entityManager.createQuery("select n from NewsModel n join n.tags t where t.name = :name", NewsModel.class)
+    public List<NewsModel> getNewsByTagName(String name) {
+        return entityManager.createQuery("select n from NewsModel n join n.tags t where t.name = :name", NewsModel.class)
                 .setParameter("name", name)
                 .getResultList();
-        return new HashSet<>(tagList);
     }
 
-    public Set<NewsModel> getNewsByTagIds(Long id) {
-        List<NewsModel> tagList = entityManager.createQuery("select n from NewsModel n join n.tags t where t.id = :id", NewsModel.class)
+    public List<NewsModel> getNewsByTagIds(Long id) {
+        return entityManager.createQuery("select n from NewsModel n join n.tags t where t.id = :id", NewsModel.class)
                 .setParameter("id", id)
                 .getResultList();
-        return new HashSet<>(tagList);
     }
 
-    public Set<NewsModel> getNewsByAuthorName(String name) {
-        List<NewsModel> tagList = entityManager.createQuery("select n from NewsModel n join n.author a where a.name = :name", NewsModel.class)
+    public List<NewsModel> getNewsByAuthorName(String name) {
+        return entityManager.createQuery("select n from NewsModel n join n.author a where a.name = :name", NewsModel.class)
                 .setParameter("name", name)
                 .getResultList();
-        return new HashSet<>(tagList);
     }
 
-    public Set<NewsModel> getNewsByTitle(String title) {
-        List<NewsModel> tagList = entityManager.createQuery("select n from NewsModel n where n.title = :title", NewsModel.class)
+    public List<NewsModel> getNewsByTitle(String title) {
+        return entityManager.createQuery("select n from NewsModel n where n.title = :title", NewsModel.class)
                 .setParameter("title", title)
                 .getResultList();
-        return new HashSet<>(tagList);
     }
 
-    public Set<NewsModel> getNewsByContent(String content) {
-        List<NewsModel> tagList = entityManager.createQuery("select n from NewsModel n where n.content = :content", NewsModel.class)
+    public List<NewsModel> getNewsByContent(String content) {
+        return entityManager.createQuery("select n from NewsModel n where n.content = :content", NewsModel.class)
                 .setParameter("content", content)
                 .getResultList();
-        return new HashSet<>(tagList);
     }
 }

@@ -9,7 +9,9 @@ import com.mjc.school.service.dto.NewsDTO;
 import com.mjc.school.service.error.ErrorCode;
 import com.mjc.school.service.error.ValidationException;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @AllArgsConstructor
 public class NewsValidation implements BaseValidation<NewsDTO> {
 

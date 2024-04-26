@@ -67,9 +67,9 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
     @Override
     @Transactional
     public boolean deleteById(Long id) {
-        AuthorModel tag = entityManager.find(AuthorModel.class, id);
-        if (tag != null) {
-            entityManager.remove(tag);
+        AuthorModel author = entityManager.find(AuthorModel.class, id);
+        if (author != null) {
+            entityManager.remove(author);
             return true;
         }
         return false;
@@ -85,7 +85,7 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
         return count > 0;
     }
 
-    private AuthorModel getAuthorByNewsId(Long newsId) {
+    public AuthorModel getAuthorByNewsId(Long newsId) {
         return entityManager.createQuery("select a from AuthorModel a join a.news n where n.id = :id", AuthorModel.class)
                 .setParameter("id", newsId)
                 .getSingleResult();
