@@ -63,14 +63,18 @@ public class App {
         newsDTO.setContent(scanner.nextLine());
         System.out.print(MenuText.ENTER_NEWS_AUTHOR_ID.getText());
         newsDTO.setAuthorId(scanner.nextLong());
-        System.out.println(MenuText.ENTER_TAGS_IDS.getText());
-
-        String input = scanner.nextLine();
-        Set<Long> setLong = Arrays.stream(input.split(" "))
-                        .map(Long::parseLong).collect(Collectors.toSet());
-        newsDTO.setTagsId(setLong);
+        System.out.print(MenuText.ENTER_TAGS_IDS.getText());
 
         scanner.nextLine();
+        String input = scanner.nextLine();
+        if (input.isEmpty()) {
+            newsDTO.setTagsId(new HashSet<>());
+        } else {
+            Set<Long> setLong = Arrays.stream(input.split(" "))
+                    .map(Long::parseLong).collect(Collectors.toSet());
+            newsDTO.setTagsId(setLong);
+        }
+
         newsController.create(newsDTO);
     }
 
@@ -87,16 +91,20 @@ public class App {
     private void addTag() {
         TagDTO tagDTO = new TagDTO();
 
-        System.out.println(MenuText.ENTER_TAG_NAME);
+        System.out.print(MenuText.ENTER_TAG_NAME.getText());
         tagDTO.setName(scanner.next());
-        System.out.println(MenuText.ENTER_NEWS_IDS);
-
-        String input = scanner.nextLine();
-        Set<Long> setLong = Arrays.stream(input.split(" "))
-                .map(Long::parseLong).collect(Collectors.toSet());
-        tagDTO.setNewsId(setLong);
+        System.out.print(MenuText.ENTER_NEWS_IDS.getText());
 
         scanner.nextLine();
+        String input = scanner.nextLine();
+        if (input.isEmpty()) {
+            tagDTO.setNewsId(new HashSet<>());
+        } else {
+            Set<Long> setLong = Arrays.stream(input.split(" "))
+                    .map(Long::parseLong).collect(Collectors.toSet());
+            tagDTO.setNewsId(setLong);
+        }
+
         tagController.create(tagDTO);
     }
 
@@ -109,14 +117,14 @@ public class App {
         newsDTO.setContent(scanner.nextLine());
         System.out.print(MenuText.ENTER_NEWS_AUTHOR_ID.getText());
         newsDTO.setAuthorId(scanner.nextLong());
-        System.out.println(MenuText.ENTER_TAGS_IDS.getText());
+        System.out.print(MenuText.ENTER_TAGS_IDS.getText());
 
         String input = scanner.nextLine();
         Set<Long> setLong = Arrays.stream(input.split(" "))
                 .map(Long::parseLong).collect(Collectors.toSet());
         newsDTO.setTagsId(setLong);
 
-        System.out.println(MenuText.ENTER_NEWS_ID.getText());
+        System.out.print(MenuText.ENTER_NEWS_ID.getText());
         Long id = scanner.nextLong();
 
         scanner.nextLine();
@@ -138,16 +146,16 @@ public class App {
     private void editTag() {
         TagDTO tagDTO = new TagDTO();
 
-        System.out.println(MenuText.ENTER_TAG_NAME);
+        System.out.print(MenuText.ENTER_TAG_NAME.getText());
         tagDTO.setName(scanner.next());
-        System.out.println(MenuText.ENTER_NEWS_IDS);
+        System.out.print(MenuText.ENTER_NEWS_IDS.getText());
 
         String input = scanner.nextLine();
         Set<Long> setLong = Arrays.stream(input.split(" "))
                 .map(Long::parseLong).collect(Collectors.toSet());
         tagDTO.setNewsId(setLong);
 
-        System.out.println(MenuText.ENTER_TAG_ID);
+        System.out.print(MenuText.ENTER_TAG_ID.getText());
         Long id = scanner.nextLong();
 
         scanner.nextLine();
@@ -210,29 +218,29 @@ public class App {
     }
 
     private void viewsTagByNewsId() {
-        System.out.println(MenuText.ENTER_NEWS_ID.getText());
+        System.out.print(MenuText.ENTER_NEWS_ID.getText());
         long newsId = scanner.nextLong();
         scanner.nextLine();
         tagController.getTagsByNewId(newsId);
     }
 
     private void viewsAuthorByNewsId() {
-        System.out.println(MenuText.ENTER_NEWS_ID.getText());
+        System.out.print(MenuText.ENTER_NEWS_ID.getText());
         long newsId = scanner.nextLong();
         scanner.nextLine();
         authorController.getAuthorByNewsId(newsId);
     }
 
     private void viewsNewsByParameters() {
-        System.out.println(MenuText.ENTER_TAG_NAME.getText());
+        System.out.print(MenuText.ENTER_TAG_NAME.getText());
         String tagName = scanner.next();
-        System.out.println(MenuText.ENTER_TAG_ID.getText());
+        System.out.print(MenuText.ENTER_TAG_ID.getText());
         String tagId = scanner.next();
-        System.out.println(MenuText.ENTER_AUTHOR_NAME.getText());
+        System.out.print(MenuText.ENTER_AUTHOR_NAME.getText());
         String authorName = scanner.next();
-        System.out.println(MenuText.ENTER_NEWS_TITLE.getText());
+        System.out.print(MenuText.ENTER_NEWS_TITLE.getText());
         String title = scanner.nextLine();
-        System.out.println(MenuText.ENTER_NEWS_CONTENT.getText());
+        System.out.print(MenuText.ENTER_NEWS_CONTENT.getText());
         String content = scanner.nextLine();
 
         scanner.nextLine();

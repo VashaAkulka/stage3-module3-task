@@ -1,6 +1,7 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.impl.TagRepository;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.repository.model.TagModel;
@@ -23,7 +24,7 @@ public class TagService implements BaseService<TagDTO, Long> {
 
     private BaseValidation<TagDTO> validation;
     private TagRepository repository;
-    private BaseRepository<NewsModel, Long> newsRepository;
+    private NewsRepository newsRepository;
 
     @Override
     public List<TagDTO> readAll() {

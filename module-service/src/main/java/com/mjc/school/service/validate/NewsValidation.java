@@ -22,10 +22,10 @@ public class NewsValidation implements BaseValidation<NewsDTO> {
     public void validate(NewsDTO newsDTO) throws ValidationException {
         if (newsDTO.getTitle().length() < 5 || newsDTO.getTitle().length() > 30) throw new ValidationException(ErrorCode.FIELD_TITLE_INVALID_LENGTH.getErrorData());
         if (newsDTO.getContent().length() < 5 || newsDTO.getContent().length() > 255) throw new ValidationException(ErrorCode.FIELD_CONTENT_INVALID_LENGTH.getErrorData());
-        if (!authorRepository.existById(newsDTO.getAuthorId())) throw new ValidationException(ErrorCode.NO_SUCH_AUTHOR.getErrorCode());
+        if (!authorRepository.existById(newsDTO.getAuthorId())) throw new ValidationException(ErrorCode.NO_SUCH_AUTHOR.getErrorData());
 
         for(Long id : newsDTO.getTagsId()) {
-            if (!tagRepository.existById(id)) throw new ValidationException(ErrorCode.NO_SUCH_TAG.getErrorCode());
+            if (!tagRepository.existById(id)) throw new ValidationException(ErrorCode.NO_SUCH_TAG.getErrorData());
         }
     }
 }

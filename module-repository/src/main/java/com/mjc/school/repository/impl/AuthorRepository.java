@@ -20,7 +20,7 @@ import java.util.Optional;
 public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
 
     @PersistenceContext
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<AuthorModel> readAll() {

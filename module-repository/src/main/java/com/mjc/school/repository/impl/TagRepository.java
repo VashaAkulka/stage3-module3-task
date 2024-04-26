@@ -3,6 +3,7 @@ package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.BaseRepository;
 
+import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.repository.model.TagModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -44,6 +45,12 @@ public class TagRepository implements BaseRepository<TagModel, Long> {
     @Transactional
     public TagModel create(TagModel entity) {
         if (entity != null) {
+            Set<NewsModel> newsToAdd = new HashSet<>();
+            for (NewsModel newsModel : entity.getNews()) {
+                NewsModel existingNews = entityManager.find(NewsModel.class, newsModel.getId());
+                newsToAdd.add(existingNews);
+            }
+            entity.setNews(newsToAdd);
             entityManager.persist(entity);
         }
         return entity;

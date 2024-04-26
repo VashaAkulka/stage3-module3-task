@@ -2,6 +2,7 @@ package com.mjc.school.repository.impl;
 
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.NewsModel;
+import com.mjc.school.repository.model.TagModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -40,6 +41,13 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
     @Transactional
     public NewsModel create(NewsModel entity) {
         if (entity != null) {
+            Set<TagModel> tagToAdd = new HashSet<>();
+            for (TagModel tagModel : entity.getTags()) {
+                TagModel existingTag = entityManager.find(TagModel.class, tagModel.getId());
+                tagToAdd.add(existingTag);
+            }
+            entity.setTags(tagToAdd);
+
             entity.setCreateDate(LocalDateTime.now());
             entity.setLastUpdateDate(LocalDateTime.now());
             entityManager.persist(entity);

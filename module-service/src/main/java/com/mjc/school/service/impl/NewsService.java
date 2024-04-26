@@ -1,7 +1,9 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.impl.AuthorRepository;
 import com.mjc.school.repository.impl.NewsRepository;
+import com.mjc.school.repository.impl.TagRepository;
 import com.mjc.school.repository.model.AuthorModel;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.repository.model.TagModel;
@@ -25,8 +27,8 @@ public class NewsService implements BaseService<NewsDTO, Long> {
 
     private BaseValidation<NewsDTO> validation;
     private NewsRepository repository;
-    private BaseRepository<AuthorModel, Long> authorRepository;
-    private BaseRepository<TagModel, Long> tagRepository;
+    private AuthorRepository authorRepository;
+    private TagRepository tagRepository;
 
     @Override
     public List<NewsDTO> readAll() {

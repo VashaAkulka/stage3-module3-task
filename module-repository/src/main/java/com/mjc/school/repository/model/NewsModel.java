@@ -26,7 +26,7 @@ public class NewsModel implements BaseEntity<Long>{
     private AuthorModel author;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "author_news",
+    @JoinTable(name = "tag_news",
     joinColumns = @JoinColumn(name = "newId"),
     inverseJoinColumns = @JoinColumn(name = "tagId"))
     private Set<TagModel> tags = new HashSet<>();
