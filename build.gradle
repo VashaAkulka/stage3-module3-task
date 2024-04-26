@@ -37,6 +37,13 @@ subprojects {
         implementation "org.postgresql:postgresql:$postgresSQLVersion"
         implementation "org.hibernate.orm:hibernate-core:$hibernateVersion"
 
+        implementation "org.aspectj:aspectjrt:1.9.7"
+        implementation "org.aspectj:aspectjweaver:1.9.7"
+
+        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
+        testImplementation 'com.h2database:h2:2.2.224'
+
+        implementation 'javax.xml.bind:jaxb-api:2.3.1'
     }
     test {
         useJUnitPlatform()
